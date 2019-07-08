@@ -492,6 +492,10 @@
                 return;
             }
 
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+
             if (!hasClass(target, 'is-disabled')) {
                 if (hasClass(target, 'pika-button') && !hasClass(target, 'is-empty') && !hasClass(target.parentNode, 'is-disabled')) {
                     self.setDate(new Date(target.getAttribute('data-pika-year'), target.getAttribute('data-pika-month'), target.getAttribute('data-pika-day')));
@@ -658,7 +662,7 @@
         self.el.className = 'pika-single' + (opts.isRTL ? ' is-rtl' : '') + (opts.theme ? ' ' + opts.theme : '');
 
         addEvent(self.el, 'mousedown', self._onMouseDown, true);
-        addEvent(self.el, 'touchend', self._onMouseDown, true);
+        addEvent(self.el, 'touchstart', self._onMouseDown, true);
         addEvent(self.el, 'change', self._onChange);
 
         if (opts.keyboardInput) {
@@ -696,7 +700,7 @@
         if (opts.bound) {
             this.hide();
             self.el.className += ' is-bound';
-            addEvent(opts.trigger, 'click', self._onInputClick);
+            addEvent(opts.trigger, 'touchend click', self._onInputClick);
             addEvent(opts.trigger, 'focus', self._onInputFocus);
             addEvent(opts.trigger, 'blur', self._onInputBlur);
         } else {
@@ -1236,7 +1240,7 @@
                 this.draw();
                 removeClass(this.el, 'is-hidden');
                 if (this._o.bound) {
-                    addEvent(document, 'click', this._onClick);
+                    addEvent(document, 'touchend click', this._onClick);
                     this.adjustPosition();
                 }
                 if (typeof this._o.onOpen === 'function') {
@@ -1250,7 +1254,7 @@
             var v = this._v;
             if (v !== false) {
                 if (this._o.bound) {
-                    removeEvent(document, 'click', this._onClick);
+                    removeEvent(document, 'touchend click', this._onClick);
                 }
                 this.el.style.position = 'static'; // reset
                 this.el.style.left = 'auto';
@@ -1272,7 +1276,7 @@
 
             this.hide();
             removeEvent(this.el, 'mousedown', this._onMouseDown, true);
-            removeEvent(this.el, 'touchend', this._onMouseDown, true);
+            removeEvent(this.el, 'touchstart', this._onMouseDown, true);
             removeEvent(this.el, 'change', this._onChange);
             if (opts.keyboardInput) {
                 removeEvent(document, 'keydown', this._onKeyChange);
@@ -1280,7 +1284,7 @@
             if (opts.field) {
                 removeEvent(opts.field, 'change', this._onInputChange);
                 if (opts.bound) {
-                    removeEvent(opts.trigger, 'click', this._onInputClick);
+                    removeEvent(opts.trigger, 'touchend click', this._onInputClick);
                     removeEvent(opts.trigger, 'focus', this._onInputFocus);
                     removeEvent(opts.trigger, 'blur', this._onInputBlur);
                 }
