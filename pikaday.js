@@ -700,9 +700,10 @@
         if (opts.bound) {
             this.hide();
             self.el.className += ' is-bound';
-            addEvent(opts.trigger, 'touchend click', self._onInputClick);
+            addEvent(opts.trigger, 'touchend', self._onInputClick);
+            addEvent(opts.trigger, 'click', self._onInputClick);
             addEvent(opts.trigger, 'focus', self._onInputFocus);
-            addEvent(opts.trigger, 'blur', self._onInputBlur);
+            // addEvent(opts.trigger, 'blur', self._onInputBlur);
         } else {
             this.show();
         }
@@ -1240,7 +1241,8 @@
                 this.draw();
                 removeClass(this.el, 'is-hidden');
                 if (this._o.bound) {
-                    addEvent(document, 'touchend click', this._onClick);
+                    addEvent(document, 'touchend', this._onClick);
+                    addEvent(document, 'click', this._onClick);
                     this.adjustPosition();
                 }
                 if (typeof this._o.onOpen === 'function') {
@@ -1254,7 +1256,8 @@
             var v = this._v;
             if (v !== false) {
                 if (this._o.bound) {
-                    removeEvent(document, 'touchend click', this._onClick);
+                    removeEvent(document, 'touchend', this._onClick);
+                    removeEvent(document, 'click', this._onClick);
                 }
                 this.el.style.position = 'static'; // reset
                 this.el.style.left = 'auto';
@@ -1284,9 +1287,10 @@
             if (opts.field) {
                 removeEvent(opts.field, 'change', this._onInputChange);
                 if (opts.bound) {
-                    removeEvent(opts.trigger, 'touchend click', this._onInputClick);
+                    removeEvent(opts.trigger, 'touchend', this._onInputClick);
+                    removeEvent(opts.trigger, 'click', this._onInputClick);
                     removeEvent(opts.trigger, 'focus', this._onInputFocus);
-                    removeEvent(opts.trigger, 'blur', this._onInputBlur);
+                    // removeEvent(opts.trigger, 'blur', this._onInputBlur);
                 }
             }
             if (this.el.parentNode) {
